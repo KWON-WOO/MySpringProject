@@ -4,7 +4,7 @@ plugins {
     id 'io.spring.dependency-management' version '1.1.7'
 }
 
-group = 'com.springdiaryproject'
+group = 'com.myspringproject'
 version = '0.0.1-SNAPSHOT'
 description = 'SpringSecurityProject'
 
@@ -27,7 +27,7 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-webmvc'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
+//    implementation 'org.springframework.boot:spring-boot-starter-security'
     testImplementation 'org.springframework.security:spring-security-test'
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.mysql:mysql-connector-j'
@@ -35,6 +35,18 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-data-jpa-test'
     testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    // QueryDSL을 위한 종속성 공식버전은 5.0.0에서 업데이트 중단된 상태. 이후 취약점 보완을 위한 OpenFeign에서 포크를 떠서 관리하는 새로운 버전 탄생.
+//    implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+//    annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"
+
+    // OpenFeign에서 관리하는 새로운 QueryDsl 버전.
+    implementation 'io.github.openfeign.querydsl:querydsl-core:6.12'
+    implementation 'io.github.openfeign.querydsl:querydsl-jpa:6.12'
+    annotationProcessor 'io.github.openfeign.querydsl:querydsl-apt:6.12:jpa'
+    
+    annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+    annotationProcessor "jakarta.persistence:jakarta.persistence-api"
 }
 
 tasks.named('test') {
